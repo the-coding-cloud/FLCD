@@ -28,6 +28,7 @@ class Hashtable:
             print(position)
             if self.data[position][0] == "*empty":
                 self.data[position][0] = element
+                self.size += 1
                 return
 
     def find(self, element):
