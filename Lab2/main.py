@@ -1,5 +1,5 @@
 class Hashtable:
-    def __init__(self, initial_capacity=3):
+    def __init__(self, initial_capacity=37):
         self.capacity = initial_capacity
         self.size = 0
         self.data = [["*empty"] for i in range(self.capacity)]
