@@ -17,16 +17,30 @@ class Hashtable:
 
         return hashcode
 
+    def h1(self, element):
+        # primary hash function based on division
+        return element % self.__capacity
+
+    def h2(self, element):
+        # secondary hash function, used for generating the probing sequence in case of collision
+        # generates a number that is relatively prime to the hashtable capacity; this will allow us to obtain a permutation of all positions in the hashtable in the probing sequence
+        return 1 + element % (self.__capacity - 1)
+
+    '''
     def hashFunction(self, element, index):
         # The collision resolution chosen for this hashtable is open addressing with double hashing: h(x,i) = (h'(x) + i*h"(x)) % hashtable_capacity, i = 0, ..., hashtable_capacity-1
-        return (element % self.__capacity + index * (1 + element % (self.__capacity - 1))) % self.__capacity
+        # This is an extended hash function that also takes the index as parameter, combining two simple hash functions, h1 and h2
+        # The index is needed in order to generate the probing sequence 
+        return (element % self.capacity + index * (1 + element % (self.capacity - 1))) % self.capacity
+    '''
 
     def add(self, element):
         # For an element x, we will successively examine the positions h(x,0), h(x,1), ..., h(x, hashtable_capacity-1)
         for i in range(self.__capacity):
-            position = self.hashFunction(self.hashCode(element), i)
+            position = (self.h1(element) + i * self.h2(element)) % self.__capacity
             print(position)
             if self.__data[position][0] == "*empty":
+                # in the case of no collision, the position will be exactly h1(element) (the first value for i is 0)
                 self.__data[position][0] = element
                 self.__size += 1
                 return
@@ -36,7 +50,7 @@ class Hashtable:
         # -1 will be returned for elements that are not part of the symbol table
 
         for i in range(self.__capacity):
-            position = self.hashFunction(self.hashCode(element), i)
+            position = (self.h1(element) + i * self.h2(element)) % self.__capacity
             if self.__data[position][0] == element:
                 return position
         else:
