@@ -1,0 +1,121 @@
+p1:
+//Compute the maximum of 3 numbers
+main {
+  int a;
+  int b;
+  int c;
+  int max;
+
+  read a;
+  read b;
+  read c;
+
+  if (a greaterThan b) {
+    max = a;
+  }
+
+  else {
+    max = b;
+  }
+
+  if (max lowerThan c) {
+    max = c;
+  }
+
+  print max;
+}
+
+(continues on the next page)
+
+
+p1 err:
+//Compute the maximum of 3 numbers, but with 2 lexical errors
+main {
+  int 1a; // Lexical error; an identifier cannot start with a digit
+  int b;
+  int c;
+  int max;
+
+  read a;
+  read b;
+  read c;
+
+  if (a ~ b) { // Lexical error; ~ is not an operator
+    max = a;
+  }
+
+  else {
+    max = b;
+  }
+
+  if (max lowerThan c) {
+    max = c;
+  }
+
+  print max;
+}
+
+(continues on the next page) 
+
+
+p2:
+//Count the digits of a number
+main {
+  int n;
+  int digits;
+
+  digits = 0;
+  read n;
+
+  if (n equal 0) {
+    digits = 1;
+  }
+
+  else {
+    while (n greaterThan 0) {
+      digits = digits+1;
+      n = n/10;
+    }
+  }
+
+  print digits;
+}
+
+(continues on the next page) 
+
+
+p3:
+// Count the even numbers from n numbers
+main {
+  int numbers[100];
+  int i;
+  int n;
+  int evenNumbers;
+  int rest;
+
+  read n;
+
+  i = 0;
+
+  while (i lowerThan n) {
+    read numbers[i];
+    i = i+1;
+  }
+
+  i = 0;
+
+  while (i lowerThan n) {
+    rest = numbers[i]%2;
+    if (rest equal 0) {
+      evenNumbers = evenNumbers+1;
+    }
+  }
+
+  print evenNumbers;
+}
+
+
+
+
+
+(that’s it)

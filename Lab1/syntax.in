@@ -1,0 +1,35 @@
+Syntactical rules:
+
+(predefined tokens will be included between double quotes)
+
+program = "main" compoundStatement
+
+simpleID = identifier
+
+arrayID = identifier "[" integer "]"
+
+arrayIndexing = identifier "[" ( simpleID | integer ) "]"
+
+compoundStatement = "{" statement {statement} "}"
+
+statement = declarationStatement | assignmentStatement | ifStatement | whileStatement
+
+declarationStatement = type (simpleID | arrayID) ";"
+
+assignmentStatement = ( simpleID | arrayIndexing ) "=" expression ";"
+
+ioStatement = ("read" | "print") identifier ";"
+
+ifStatement = "if" condition compoundStatement ["else" compoundStatement]
+
+whileStatement = "while" condition compoundStatement
+
+condition = expression relation expression
+
+expression = term | term operator term
+
+term = simpleID | arrayIndexing | constant
+
+operator = "+" | "-" | "/" | "%" | "*"
+
+relation = "greaterThan" | "lowerThan" | "equals"

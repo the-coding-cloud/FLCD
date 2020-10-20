@@ -1,0 +1,27 @@
+main {
+  int numbers[100];
+  int i;
+  int n;
+  int evenNumbers;
+  int rest;
+
+  read n;
+
+  i = 0;
+
+  while (i lowerThan n) {
+    read numbers[i];
+    i = i+1;
+  }
+
+  i = 0;
+
+  while (i lowerThan n) {
+    rest = numbers[i]%2;
+    if (rest equal 0) {
+      evenNumbers = evenNumbers+1;
+    }
+  }
+
+  print evenNumbers;
+}
