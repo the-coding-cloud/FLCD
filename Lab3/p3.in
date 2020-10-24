@@ -7,7 +7,7 @@ main {
 
   read n;
 
-  i = 0;
+  i = "constant";
 
   while (i lowerThan n) {
     read numbers[i];
@@ -18,7 +18,7 @@ main {
 
   while (i lowerThan n) {
     rest = numbers[i]%2;
-    if (rest equal 0) {
+    if (rest equals 0) {
       evenNumbers = evenNumbers+1;
     }
   }

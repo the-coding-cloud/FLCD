@@ -5,7 +5,7 @@ main {
   digits = 0;
   read n;
 
-  if (n equal 0) {
+  if (n equals 0) {
     digits = 1;
   }
 

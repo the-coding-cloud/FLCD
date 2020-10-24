@@ -26,7 +26,6 @@ class Hashtable:
         # For an element x, we will successively examine the positions h(x,0), h(x,1), ..., h(x, hashtable_capacity-1)
         for i in range(self.__capacity):
             position = self.hashFunction(self.hashCode(element), i)
-            print(position)
             if self.__data[position][0] == "*empty":
                 self.__data[position][0] = element
                 self.__size += 1
