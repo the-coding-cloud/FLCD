@@ -21,27 +21,22 @@ class Scanner:
             for line in file:
                 if line != "\n":  # If the line is not empty, we start processing it
                     tokens = self.__tokenize(line.strip())  # We __tokenize the line
-                    if not self.__isSeparator(tokens[
-                                                  -1]):  # We check if it ends with a separator (because all statements in my mini language end with a separator)
-                        self.__writeScanningOutput(fileName, "Missing separator on line {0}".format(
-                            lineNumber))  # If it doesn't end in a separator, we stop here and write to the file an error message
+                    if not self.__isSeparator(tokens[-1]):  # We check if it ends with a separator (because all statements in my mini language end with a separator)
+                        self.__writeScanningOutput(fileName, "Missing separator on line {0}".format(lineNumber))  # If it doesn't end in a separator, we stop here and write to the file an error message
                         return
                     # print(tokens)
                     for token in tokens:
-                        tokenType = self.__classify(
-                            token)  # We process now each token - firstly, we __classify it (check if it's a constant, identifier or a token from the language)
+                        tokenType = self.__classify(token)  # We process now each token - firstly, we __classify it (check if it's a constant, identifier or a token from the language)
                         if tokenType is None:  # If it can't be classified, we return an error message stating which is the problematic token and on what line
                             print("Invalid token on line {0} -> {1}".format(lineNumber, token))
                             message = "Invalid token on line {0} -> {1}".format(lineNumber, token)
                             self.__writeScanningOutput(fileName, message)
                             return
                         else:
-                            self.__codify(token,
-                                          tokenType)  # If we reach this point, everything is ok and we just add the token to the PIF
+                            self.__codify(token, tokenType)  # If we reach this point, everything is ok and we just add the token to the PIF
                 lineNumber += 1
 
-        self.__writeScanningOutput(fileName,
-                                   message)  # After scanning the entire program, we can write the output to a file
+        self.__writeScanningOutput(fileName, message)  # After scanning the entire program, we can write the output to a file
         # return self.pif, self.st
 
     def __writeScanningOutput(self, fileName, message=None):
@@ -49,7 +44,7 @@ class Scanner:
             filename = fileName.split(".")[0] + ".out"
             file = open(filename, "w")
             st = self.__st.getData()
-            file.write("--- Symbol Table ---\n")
+            file.write("--- Symbol Table (represented on hashtable) ---\n")
             file.write("Pos. | Value\n")
             for i in range(len(st)):
                 if st[i][0] != "*empty":
@@ -60,10 +55,12 @@ class Scanner:
             for line in self.__pif:
                 file.write("{0} ---- {1}\n".format(line[0], line[1]))
 
+            file.close()
         else:
             filename = fileName.split(".")[0] + ".out"
             file = open(filename, "w")
             file.write(message)
+            file.close()
 
     def __tokenize(self, string):
         tokens = []
@@ -73,15 +70,12 @@ class Scanner:
 
         for char in string:
             # The tokenizing is done character by character, verifying certain cases at each step
-            if not self.__isOperator(char) and not self.__isSeparator(
-                    char):  # The splitting is done by separators and operators
-                if (
-                        char == "\"" or char == "\'") and isString is False:  # If this is the beginning of a string/char constant, we add the character to the token and continue processing
+            if not self.__isOperator(char) and not self.__isSeparator(char):  # The splitting is done by separators and operators
+                if (char == "\"" or char == "\'") and isString is False:  # If this is the beginning of a string/char constant, we add the character to the token and continue processing
                     token += char
                     isString = True
 
-                elif (
-                        char == "\"" or char == "\'") and isString is True:  # If this is the end of a string/char constant, we add the token to the list and reinitialize the variable with the empty string
+                elif (char == "\"" or char == "\'") and isString is True:  # If this is the end of a string/char constant, we add the token to the list and reinitialize the variable with the empty string
                     token += char
                     isString = False
                     tokens.append(token)
@@ -99,10 +93,23 @@ class Scanner:
                     token += char
 
             else:  # If we reach a separator/operator, we add the token previously processed to the list, then we add the operator/separator to the list of tokens too
-                if token != "":
-                    tokens.append(token)
-                tokens.append(char)
-                token = ""
+                # Check for unary operators +/-
+                if char == "+" or char == "-":
+                    if tokens[-1] in ["-", "+", "/", "*", "%", "="] and token == "":
+                        # If a +/- operator is preceded by another operator or by =, then it means it is a unary operator and it is the sign of the integer and it is added as part of the token
+                        token = char
+                    else:
+                        if token != "":
+                            # Otherwise, it is treated like the other operators and separators
+                            tokens.append(token)
+                        tokens.append(char)
+                        token = ""
+
+                else:
+                    if token != "":
+                        tokens.append(token)
+                    tokens.append(char)
+                    token = ""
 
         return tokens
 
@@ -161,6 +168,13 @@ class Scanner:
     def __isInt(n):
         try:
             int(n)
+            # We check to see if the integer constant is constructed correctly
+            if n[0] in ["-", "+"]:
+                if n[1] == "0":
+                    return False
+            elif n != "0" and n[0] == "0":
+                return False
+
             return True
         except ValueError:
             return False

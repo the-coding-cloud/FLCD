@@ -1,4 +1,4 @@
---- Symbol Table ---
+--- Symbol Table (represented on hashtable) ---
 Pos. | Value
 2 ---- rest
 11 ---- 0
