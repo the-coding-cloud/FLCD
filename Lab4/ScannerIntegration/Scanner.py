@@ -1,5 +1,5 @@
 from Lab3.Hashtable import Hashtable
-from Lab4.FA import FA
+from Lab4.ScannerIntegration.FA import FA
 
 
 class Scanner:

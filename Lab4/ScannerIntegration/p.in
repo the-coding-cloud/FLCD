@@ -1,5 +1,5 @@
 main {
-  int afdf;
+  int anIdentifier;
   int b;
   int c;
   int max;
