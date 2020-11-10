@@ -5,6 +5,7 @@ class FA:
         self.__transitions = {}
         self.__initialState = None
         self.__finalStates = []
+        self.__dfa = True
 
         self.__readFA(filename)
 
@@ -29,7 +30,11 @@ class FA:
                 # Since we have a DFA, it is easier to store the transition functions in a dictionary,
                 # where the key is a tuple of the form (q, a), q - current state, a - element from the alphabet
                 # and the value is the next state
-                self.__transitions[(t[0], t[1])] = t[2]
+                if (t[0], t[1]) in self.__transitions.keys():
+                    self.__transitions[(t[0], t[1])].append(t[2])
+                    self.__dfa = False
+                else:
+                    self.__transitions[(t[0], t[1])] = [t[2]]
 
             # Read the fourth line, containing the initial state
             temp = file.readline()
@@ -57,13 +62,17 @@ class FA:
             print("delta({0}, {1}) = {2}".format(t[0], t[1], self.__transitions[t]))
 
     def checkSequenceAcceptance(self, sequence):
+        if not self.__dfa:
+            print("This is not a dfa --- we will not check the acceptance of this sequence")
+            return
+
         currentState = self.__initialState
 
         while sequence != "":
             transitionKey = (currentState, sequence[0])
 
             if transitionKey in self.__transitions.keys():
-                currentState = self.__transitions[transitionKey]
+                currentState = self.__transitions[transitionKey][0]
                 sequence = sequence[1:]
 
             else:
@@ -74,3 +83,4 @@ class FA:
 
         else:
             return True
+
