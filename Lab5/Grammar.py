@@ -56,7 +56,6 @@ class Grammar:
     def getProductions(self):
         return self.__productions
 
-
 def printMenu():
     print("0. Exit")
     print("1. Print set of terminals")
