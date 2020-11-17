@@ -1,5 +1,6 @@
 from Lab5.Grammar import Grammar
 
+
 class ParserRecursiveDescend:
     def __init__(self):
         self.grammar = Grammar("g1.txt")
@@ -10,9 +11,8 @@ class ParserRecursiveDescend:
 
     def expand(self):
         nonterminal = self.input.pop()
-        self.work.append((nonterminal,0))
+        self.work.append((nonterminal, 0))
         self.input.append(self.grammar.getProductions()[nonterminal][0])
-
 
     def advance(self):
         self.work.append(self.input.pop())

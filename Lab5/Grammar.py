@@ -24,6 +24,8 @@ class Grammar:
                 else:
                     self.__productions[temp[0]] = [temp[1].split("#")]
 
+            print(self.__productions)
+
     def printTerminals(self):
         print("Set of terminals: ", self.__terminals)
 
@@ -56,6 +58,7 @@ class Grammar:
     def getProductions(self):
         return self.__productions
 
+
 def printMenu():
     print("0. Exit")
     print("1. Print set of terminals")
@@ -66,7 +69,7 @@ def printMenu():
 
 
 def run():
-    g = Grammar("g2.txt")
+    g = Grammar("g1.txt")
 
     while True:
         print("----------------------------------")
