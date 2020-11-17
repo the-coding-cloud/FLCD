@@ -44,6 +44,18 @@ class Grammar:
         else:
             print("There is no such non terminal")
 
+    def getTerminals(self):
+        return self.__terminals
+
+    def getNonTerminals(self):
+        return self.__nonTerminals
+
+    def getStartSymbol(self):
+        return self.__startSymbol
+
+    def getProductions(self):
+        return self.__productions
+
 
 def printMenu():
     print("0. Exit")
