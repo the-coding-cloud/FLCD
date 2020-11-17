@@ -1,13 +1,6 @@
-//non-terminals
 program constant type compoundStatement simpleID arrayID arrayIndexing statement declarationStatement assignmentStatement ioStatement ifStatement whileStatement condition expression term operator relation
-
-//terminals
 identifier int string char main if else while greaterThan lowerThan equals read print [ ] { } ; = + - / % *
-
-//starting symbol
 program
-
-//productions
 program main#compoundStatement
 simpleID identifier
 arrayID identifier#[#integer#]
@@ -25,5 +18,25 @@ assignmentStatement arrayIndexing#=#expression#;
 ioStatement read#identifier#;
 ioStatement print#identifier#;
 ifStatement if#condition#compoundStatement
-ifStatement if#condition#compoundStatement ["else" compoundStatement]
-
+ifStatement if#condition#compoundStatement#else#compoundStatement
+whileStatement while#condition#compoundStatement
+condition expression#relation#expression
+expression constant
+expression term#operator#term
+term simpleID
+term arrayIndexing
+term integer
+constant integer
+constant string
+constant char
+operator +
+operator -
+operator /
+operator %
+operator *
+relation greaterThan
+relation lowerThan
+relation equals
+type int
+type string
+type char
