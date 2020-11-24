@@ -1,5 +1,6 @@
 from Lab5.Grammar import Grammar
 
+
 class ParserRecursiveDescend:
     #input must be reversed for the pop to work
     # such that the expansion of the work stack to be ___appended___ in the input list
@@ -12,9 +13,8 @@ class ParserRecursiveDescend:
 
     def expand(self):
         nonterminal = self.input.pop()
-        self.work.append((nonterminal,0))
+        self.work.append((nonterminal, 0))
         self.input.append(self.grammar.getProductions()[nonterminal][0])
-
 
     def advance(self):
         self.work.append(self.input.pop())
