@@ -20,14 +20,15 @@ class ParserRecursiveDescend:
         print(self.input)
 
     def expand(self):
-        nonterminal = self.input.pop()
+        nonterminal = self.input.pop(0)
         self.work.append((nonterminal, 0))
-        self.input = self.input + self.grammar.getProductions()[nonterminal][0].reverse()
+        a = self.grammar.getProductions()[nonterminal][0]
+        self.input = a +  self.input
         if self.debug:
             self.printParserStep()
 
     def advance(self):
-        self.work.append(self.input.pop())
+        self.work.append(self.input.pop(0))
         self.index += 1
         if self.debug:
             self.printParserStep()
@@ -46,23 +47,25 @@ class ParserRecursiveDescend:
         if self.debug:
             self.printParserStep()
     def anotherTry(self):
-        if self.index == 1 and self.work[len(self.work)-1][0] == self.grammar.getStartSymbol():
+        if self.debug:
+            self.printParserStep()
+        if self.index == 0 and self.work[len(self.work)-1][0] == self.grammar.getStartSymbol():
             raise Exception("ERROR")
-        currentNonTerm,nonTermIndex = self.work.pop()
+        (currentNonTerm,nonTermIndex) = self.work.pop()
         currentNonTermProductions = self.grammar.getProductions()[currentNonTerm]
         if len(currentNonTermProductions)-1 > nonTermIndex:
             self.state = "q"
             self.work.append((currentNonTerm,nonTermIndex+1))
             #self.input.pop()  #handle this better, just one terminal will pop, not the whole non terminal expansion
             for i in currentNonTermProductions[nonTermIndex]:
-                self.input.pop()
-            self.input.append(currentNonTermProductions[nonTermIndex])
+                self.input.pop(0)
+            aux = currentNonTermProductions[nonTermIndex + 1]
+            self.input = aux + self.input
         else:
             for i in currentNonTermProductions[nonTermIndex]:
-                self.input.pop()
-            self.input.append(currentNonTerm)
-        if self.debug:
-            self.printParserStep()
+                self.input.pop(0)
+            self.input = [currentNonTerm] + self.input
+
 
     def run(self, w):
         self.state = "q"
@@ -76,18 +79,20 @@ class ParserRecursiveDescend:
                     self.state = "t"
                 else:
                     #expand condition, top of beta is non terminal
-                    if self.input[len(self.input)-1] in self.grammar.getNonTerminals():
+                    if self.input[0] in self.grammar.getNonTerminals():
                         self.expand()
                     #advance condition, top of beta is terminal and it matches the index of the w
-                    elif self.input[len(self.input)-1] in self.grammar.getTerminals() and self.input[len(self.input)-1] == w[self.index]:
+                    elif self.input[0] in self.grammar.getTerminals() and self.input[0] == w[self.index]:
                         self.advance()
                     #Woopsie -> we have a momentary insuccess
                     else :
                         self.momentaryInsuccess()
             else:
                 if self.state == "b":
+                    #back
                     if self.work[len(self.work)-1] in self.grammar.getTerminals():
                         self.back()
+                    #anotherTry
                     else:
                         self.anotherTry()
         if self.state == "e":
