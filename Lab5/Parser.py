@@ -4,8 +4,8 @@ from Lab5.Grammar import Grammar
 class ParserRecursiveDescend:
     #input must be reversed for the pop to work
     # such that the expansion of the work stack to be ___appended___ in the input list
-    def __init__(self):
-        self.grammar = Grammar("g1.txt")
+    def __init__(self, grammarTextLocation):
+        self.grammar = Grammar(grammarTextLocation)
         self.work = []
         self.input = []
         self.state = "q"
@@ -106,5 +106,5 @@ class ParserRecursiveDescend:
 
 
 
-p = ParserRecursiveDescend()
+p = ParserRecursiveDescend("g1.text")
 p.run(['a','a','c','b','c'])
