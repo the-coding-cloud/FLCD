@@ -37,7 +37,7 @@ class ParserRecursiveDescend:
         if self.debug:
             self.printParserStep()
     def back(self):
-        self.input.append(self.work.pop())
+        self.input = [self.work.pop()] + self.input
         self.index -= 1
         if self.debug:
             self.printParserStep()
@@ -66,6 +66,9 @@ class ParserRecursiveDescend:
                 self.input.pop(0)
             self.input = [currentNonTerm] + self.input
 
+    def checkWordLenght(self, w):
+        if len(w) > self.index: return self.input[0] == w[self.index]
+        return False
 
     def run(self, w):
         self.state = "q"
@@ -82,7 +85,7 @@ class ParserRecursiveDescend:
                     if self.input[0] in self.grammar.getNonTerminals():
                         self.expand()
                     #advance condition, top of beta is terminal and it matches the index of the w
-                    elif self.input[0] in self.grammar.getTerminals() and self.input[0] == w[self.index]:
+                    elif self.input[0] in self.grammar.getTerminals() and self.checkWordLenght(w):
                         self.advance()
                     #Woopsie -> we have a momentary insuccess
                     else :
@@ -106,5 +109,5 @@ class ParserRecursiveDescend:
 
 
 
-p = ParserRecursiveDescend("g1.text")
+p = ParserRecursiveDescend("g1.txt")
 p.run(['a','a','c','b','c'])
