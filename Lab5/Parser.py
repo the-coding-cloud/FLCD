@@ -11,6 +11,8 @@ class ParserRecursiveDescend:
         self.state = "q"
         self.index = 0
         self.debug = True
+        self.tree = []
+        self.treeNodeIndex = 0
 
     def printParserStep(self):
         print("~~~~~~~~~~~~")
@@ -104,10 +106,70 @@ class ParserRecursiveDescend:
             print("Sequence accepted")
             print(self.work, self.input, self.index)
 
+#[-1, 0, 0, 0, 0]
+#[S, a, [S, a, [S, c]], b, S,]
 
 
+    def parseTree(self, work):
+        index = 0
+        father = -1
+        sibling = -1
+        for index in range(0, len(work)):
+            if type(work[index]) == tuple:
+                self.tree.append(Node(work[index][0]))
+                self.tree[index].production = work[index][1]
+            else:
+                self.tree.append(Node(work[index]))
+
+
+        for index in range(0, len(work)-1):
+            if type(work[index]) == tuple:
+                self.tree[index].father = father
+                father = index
+                lengthProduction = len(self.grammar.getProductions()[work[index][0]][work[index][1]])
+                #index += len
+                vectorIndex = []
+                #[1, 2, 3, 4] 4  o sa aiba offseturi cand dau de nonTerminale
+                #[1, 2, 9, 21]
+                for i in range(1, lengthProduction+1):
+                    vectorIndex.append(index+i)
+                for i in range(0, lengthProduction):
+                    if self.tree[vectorIndex[i]].production != -1:  #if it is a nonTerminal compute offset
+                        offset = self.getProductionOffset(vectorIndex[i])
+                        for j in range(i+1, lengthProduction):
+                            vectorIndex[j] += offset
+                for i in range(0, lengthProduction-1):
+                    self.tree[vectorIndex[i]].sibling = vectorIndex[i+1]
+                # for index in range(0, len(work) - 1):
+                #     print(index, " ", str(self.tree[index]))
+            else:
+                self.tree[index].father = father
+                father = -1
+        for index in range(0, len(work)-1):
+            print(str(self.tree[index]))
+
+    def getProductionOffset(self, index):
+        production = self.grammar.getProductions()[self.work[index][0]][self.work[index][1]]
+        lenghtOfProduction = len(production)
+        sum = lenghtOfProduction
+        for i in range(1, lenghtOfProduction+1):
+            if type(self.work[index+i]) == tuple:
+                sum += self.getProductionOffset(index+i)
+        return sum
+
+
+class Node:
+    def __init__(self, value):
+        self.father = -1
+        self.sibling = -1
+        self.value = value
+        self.production = -1
+    def __str__(self):
+        return str(self.value) + " " + str(self.father) +" "+ str(self.sibling)
 
 
 
 p = ParserRecursiveDescend("g1.txt")
 p.run(['a','a','c','b','c'])
+print("~~~~~~")
+p.parseTree(p.work)
