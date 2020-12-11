@@ -84,7 +84,7 @@ class ParserRecursiveDescend:
 
     def parseTree(self, work):
         # the idea is that the parse tree will be computed based on the work stack
-        #
+        # we start from the root (starting symbol), then set the links between nodes while processing each production in the work stack
         father = -1
 
         for index in range(0, len(work)):
