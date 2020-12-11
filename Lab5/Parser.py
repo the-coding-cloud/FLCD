@@ -94,7 +94,7 @@ class ParserRecursiveDescend:
             else:
                 self.tree.append(Node(work[index]))
 
-        for index in range(0, len(work) - 1):
+        for index in range(0, len(work)):
             if type(work[index]) == tuple:
                 self.tree[index].father = father
                 father = index
@@ -116,8 +116,9 @@ class ParserRecursiveDescend:
             else:
                 self.tree[index].father = father
                 father = -1
-        for index in range(0, len(work) - 1):
-            print(str(self.tree[index]))
+
+        for index in range(0, len(work)):
+            print(index, " ", str(self.tree[index]))
 
     def getProductionOffset(self, index):
         production = self.grammar.getProductions()[self.work[index][0]][self.work[index][1]]
