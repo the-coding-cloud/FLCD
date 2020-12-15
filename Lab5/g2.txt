@@ -11,6 +11,7 @@ statement declarationStatement
 statement assignmentStatement
 statement ifStatement
 statement whileStatement
+statement ioStatement
 declarationStatement type#simpleID#;
 declarationStatement type#arrayID#;
 assignmentStatement simpleID#=#expression#;

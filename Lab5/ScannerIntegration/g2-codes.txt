@@ -11,6 +11,7 @@ statement declarationStatement
 statement assignmentStatement
 statement ifStatement
 statement whileStatement
+statement ioStatement
 declarationStatement type#simpleID#14
 declarationStatement type#arrayID#14
 assignmentStatement simpleID#7#expression#14
