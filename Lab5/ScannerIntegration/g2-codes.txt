@@ -19,8 +19,8 @@ declarationStatement type#simpleID#14
 declarationStatement type#arrayID#14
 assignmentStatement simpleID#7#expression#14
 assignmentStatement arrayIndexing#7#expression#14
-ioStatement 19#identifier#14
-ioStatement 20#identifier#14
+ioStatement 19#simpleID#14
+ioStatement 20#simpleID#14
 ifStatement 24#condition#compoundStatement
 ifStatement 24#condition#compoundStatement#25#compoundStatement
 whileStatement 26#condition#compoundStatement
