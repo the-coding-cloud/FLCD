@@ -17,6 +17,7 @@ class ParserRecursiveDescend:
         self.tokenCodes ={}
         self.getTokens("tokens.in")
         self.word = ""
+        self.iteration =0
     def getTokens(self, fileName):
         with open(fileName, "r") as file:
             for line in file:
@@ -25,6 +26,8 @@ class ParserRecursiveDescend:
     def printParserStep(self, step):
         print("~~~~~~~~~~~~")
         print(step)
+        print("iteration: ", self.iteration)
+        self.iteration +=1
         print(self.state)
         print(self.index)
         string = ""
@@ -225,3 +228,4 @@ for e in pif:
     sequence.append(str(e[0]))
 print(sequence)
 p.run(sequence)
+p.parseTree(p.work)
