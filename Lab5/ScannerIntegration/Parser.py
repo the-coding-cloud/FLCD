@@ -1,6 +1,7 @@
 from Lab5.ScannerIntegration.Grammar import Grammar
 from Lab5.ScannerIntegration.Scanner import Scanner
 
+
 class ParserRecursiveDescend:
     # input must be reversed for the pop to work
     # such that the expansion of the work stack to be appended to the input list
@@ -12,6 +13,7 @@ class ParserRecursiveDescend:
         self.index = 0
         self.debug = True
         self.tree = []
+        self.filename = grammarTextLocation
 
     def printParserStep(self, step):
         print("~~~~~~~~~~~~")
@@ -118,8 +120,15 @@ class ParserRecursiveDescend:
                 self.tree[index].father = father
                 father = -1
 
+        filename = self.filename.split(".")[0] + ".out"
+        file = open(filename, "w")
+        file.write("index | value | father | sibling\n")
+
         for index in range(0, len(work)):
+            file.write(str(index) + " " + str(self.tree[index]) + "\n")
             print(index, " ", str(self.tree[index]))
+
+        file.close()
 
     def getProductionOffset(self, index):
         production = self.grammar.getProductions()[self.work[index][0]][self.work[index][1]]
