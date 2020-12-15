@@ -12,7 +12,6 @@ class ParserRecursiveDescend:
         self.index = 0
         self.debug = True
         self.tree = []
-        self.treeNodeIndex = 0
 
     def printParserStep(self):
         print("~~~~~~~~~~~~")
@@ -76,7 +75,8 @@ class ParserRecursiveDescend:
             self.input = [currentNonTerm] + self.input
 
     def checkWordLength(self, w):
-        if len(w) > self.index: return self.input[0] == w[self.index]
+        if len(w) > self.index:
+            return self.input[0] == w[self.index]
         return False
 
     # [-1, 0, 0, 0, 0]
