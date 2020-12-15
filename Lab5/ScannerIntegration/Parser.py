@@ -13,8 +13,9 @@ class ParserRecursiveDescend:
         self.debug = True
         self.tree = []
 
-    def printParserStep(self):
+    def printParserStep(self, step):
         print("~~~~~~~~~~~~")
+        print(step)
         print(self.state)
         print(self.index)
         print(self.work)
@@ -26,34 +27,34 @@ class ParserRecursiveDescend:
         a = self.grammar.getProductions()[nonTerminal][0]
         self.input = a + self.input
         if self.debug:
-            self.printParserStep()
+            self.printParserStep("expand")
 
     def advance(self):
         self.work.append(self.input.pop(0))
         self.index += 1
         if self.debug:
-            self.printParserStep()
+            self.printParserStep("advance")
 
     def momentaryInsuccess(self):
         self.state = "b"
         if self.debug:
-            self.printParserStep()
+            self.printParserStep("mom insuccess")
 
     def back(self):
         self.input = [self.work.pop()] + self.input
         self.index -= 1
         if self.debug:
-            self.printParserStep()
+            self.printParserStep("back")
 
     def success(self):
         self.state = "f"
         self.index += 1
         if self.debug:
-            self.printParserStep()
+            self.printParserStep("success")
 
     def anotherTry(self):
         if self.debug:
-            self.printParserStep()
+            self.printParserStep("another try")
         if self.index == 0 and self.work[len(self.work) - 1][0] == self.grammar.getStartSymbol():
             raise Exception("ERROR")
 
@@ -183,6 +184,6 @@ s = Scanner()
 pif, st = s.scan("p.in")
 sequence = []
 for e in pif:
-    sequence.append(e[0])
+    sequence.append(str(e[0]))
 print(sequence)
 p.run(sequence)

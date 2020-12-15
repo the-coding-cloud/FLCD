@@ -6,7 +6,10 @@ simpleID 0
 arrayID 0#10#integer#11
 arrayIndexing 0#10#simpleID#10#
 arrayIndexing 0#10#integer#10#
-compoundStatement 12#statement#12#statement#13#13
+compoundStatement 12#statement#statements#13
+compoundStatement 12#statement#13
+statements statement
+statements statement#statements
 statement declarationStatement
 statement assignmentStatement
 statement ifStatement
