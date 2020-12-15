@@ -26,6 +26,7 @@ ifStatement 24#condition#compoundStatement#25#compoundStatement
 whileStatement 26#condition#compoundStatement
 condition 8#expression#relation#expression#9
 expression 0
+expression 1
 expression term#operator#term
 term simpleID
 term arrayIndexing

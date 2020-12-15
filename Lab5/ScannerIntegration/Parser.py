@@ -2,7 +2,7 @@ from Lab5.ScannerIntegration.Grammar import Grammar
 from Lab5.ScannerIntegration.Scanner import Scanner
 
 
-class ParserRecursiveDescend:
+class ParserRecursiveDescent:
     # input must be reversed for the pop to work
     # such that the expansion of the work stack to be appended to the input list
     def __init__(self, grammarTextLocation):
@@ -14,28 +14,30 @@ class ParserRecursiveDescend:
         self.debug = True
         self.tree = []
         self.filename = grammarTextLocation
-        self.tokenCodes ={}
+        self.tokenCodes = {}
         self.getTokens("tokens.in")
         self.word = ""
-        self.iteration =0
+        self.iteration = 0
+
     def getTokens(self, fileName):
         with open(fileName, "r") as file:
             for line in file:
                 tokens = line.strip().split(" ")
                 self.tokenCodes[tokens[0]] = int(tokens[2])
+
     def printParserStep(self, step):
         print("~~~~~~~~~~~~")
         print(step)
         print("iteration: ", self.iteration)
-        self.iteration +=1
+        self.iteration += 1
         print(self.state)
         print(self.index)
         string = ""
         for i in self.work:
             if type(i) != tuple:
-                string += "\""+ list(self.tokenCodes.keys())[list(self.tokenCodes.values()).index(int(i))] + "\" , "
+                string += "\"" + list(self.tokenCodes.keys())[list(self.tokenCodes.values()).index(int(i))] + "\" , "
             else:
-                string+= str(i) + ", "
+                string += str(i) + ", "
         print(string)
         string = ""
         for i in self.input:
@@ -133,12 +135,12 @@ class ParserRecursiveDescend:
                 lengthProduction = len(self.grammar.getProductions()[work[index][0]][work[index][1]])
 
                 vectorIndex = []
-                # [1, 2, 3, 4] 4  o sa aiba offseturi cand dau de nonTerminale
+                # [1, 2, 3, 4] we will add some offsets according to the corresponding production size in order to match the indexes
                 # [1, 2, 9, 21]
                 for i in range(1, lengthProduction + 1):
                     vectorIndex.append(index + i)
                 for i in range(0, lengthProduction):
-                    if self.tree[vectorIndex[i]].production != -1:  # if it is a nonTerminal compute offset
+                    if self.tree[vectorIndex[i]].production != -1:  # if it is a nonTerminal, compute offset
                         offset = self.getProductionOffset(vectorIndex[i])
                         for j in range(i + 1, lengthProduction):
                             vectorIndex[j] += offset
@@ -218,14 +220,14 @@ class Node:
         return str(self.value) + " " + str(self.father) + " " + str(self.sibling)
 
 
-
-
-p = ParserRecursiveDescend("g2-codes.txt")
+p = ParserRecursiveDescent("g2-codes.txt")
 s = Scanner()
 pif, st = s.scan("p.in")
+
 sequence = []
 for e in pif:
     sequence.append(str(e[0]))
 print(sequence)
+
 p.run(sequence)
 p.parseTree(p.work)
