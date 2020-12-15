@@ -14,14 +14,40 @@ class ParserRecursiveDescend:
         self.debug = True
         self.tree = []
         self.filename = grammarTextLocation
-
+        self.tokenCodes ={}
+        self.getTokens("tokens.in")
+        self.word = ""
+    def getTokens(self, fileName):
+        with open(fileName, "r") as file:
+            for line in file:
+                tokens = line.strip().split(" ")
+                self.tokenCodes[tokens[0]] = int(tokens[2])
     def printParserStep(self, step):
         print("~~~~~~~~~~~~")
         print(step)
         print(self.state)
         print(self.index)
-        print(self.work)
-        print(self.input)
+        string = ""
+        for i in self.work:
+            if type(i) != tuple:
+                string += "\""+ list(self.tokenCodes.keys())[list(self.tokenCodes.values()).index(int(i))] + "\" , "
+            else:
+                string+= str(i) + ", "
+        print(string)
+        string = ""
+        for i in self.input:
+            try:
+                string += "\"" + list(self.tokenCodes.keys())[list(self.tokenCodes.values()).index(int(i))] + "\" , "
+            except:
+                string += str(i) + ", "
+        print(string)
+        string = ""
+        for i in self.word:
+            if type(i) != tuple:
+                string += "\"" + list(self.tokenCodes.keys())[list(self.tokenCodes.values()).index(int(i))] + "\" , "
+            else:
+                string += str(i) + ", "
+        print(string)
 
     def expand(self):
         nonTerminal = self.input.pop(0)
@@ -140,6 +166,7 @@ class ParserRecursiveDescend:
         return offset
 
     def run(self, w):
+        self.word = w
         self.state = "q"
         self.index = 0
         self.work = []
@@ -186,6 +213,8 @@ class Node:
 
     def __str__(self):
         return str(self.value) + " " + str(self.father) + " " + str(self.sibling)
+
+
 
 
 p = ParserRecursiveDescend("g2-codes.txt")
