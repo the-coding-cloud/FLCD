@@ -1,0 +1,10 @@
+index | value | father | sibling
+0 S -1 -1
+1 a 0 2
+2 S -1 6
+3 a 2 4
+4 S -1 -1
+5 c 4 -1
+6 b -1 7
+7 S -1 -1
+8 c 7 -1

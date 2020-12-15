@@ -26,10 +26,14 @@ whileStatement = "while" condition compoundStatement
 
 condition = expression relation expression
 
-expression = term | term operator term
+expression = constant | term operator term
 
-term = simpleID | arrayIndexing | constant
+term = simpleID | arrayIndexing | integer
+
+constant = integer | string | char
 
 operator = "+" | "-" | "/" | "%" | "*"
 
 relation = "greaterThan" | "lowerThan" | "equals"
+
+type = "int" | "string" | "char"

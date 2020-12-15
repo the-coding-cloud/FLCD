@@ -1,0 +1,47 @@
+program constant type compoundStatement simpleID arrayID arrayIndexing statement declarationStatement assignmentStatement ioStatement ifStatement whileStatement condition expression term operator relation statements
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
+program
+program 15#compoundStatement
+simpleID 0
+arrayID 0#10#integer#11
+arrayIndexing 0#10#simpleID#10#
+arrayIndexing 0#10#integer#10#
+compoundStatement 12#statement#statements#13
+compoundStatement 12#statement#13
+statements statement
+statements statement#statements
+statement declarationStatement
+statement assignmentStatement
+statement ifStatement
+statement whileStatement
+statement ioStatement
+declarationStatement type#simpleID#14
+declarationStatement type#arrayID#14
+assignmentStatement simpleID#7#expression#14
+assignmentStatement arrayIndexing#7#expression#14
+ioStatement 19#simpleID#14
+ioStatement 20#simpleID#14
+ifStatement 24#condition#compoundStatement
+ifStatement 24#condition#compoundStatement#25#compoundStatement
+whileStatement 26#condition#compoundStatement
+condition 8#expression#relation#expression#9
+expression 0
+expression 1
+expression term#operator#term
+term simpleID
+term arrayIndexing
+term integer
+constant integer
+constant string
+constant char
+operator 2
+operator 3
+operator 4
+operator 5
+operator 6
+relation 21
+relation 22
+relation 23
+type 16
+type 18
+type 17

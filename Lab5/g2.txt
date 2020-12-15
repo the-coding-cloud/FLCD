@@ -1,0 +1,43 @@
+program constant type compoundStatement simpleID arrayID arrayIndexing statement declarationStatement assignmentStatement ioStatement ifStatement whileStatement condition expression term operator relation
+identifier int string char main if else while greaterThan lowerThan equals read print [ ] { } ; = + - / % *
+program
+program main#compoundStatement
+simpleID identifier
+arrayID identifier#[#integer#]
+arrayIndexing identifier#[#simpleID#]#
+arrayIndexing identifier#[#integer#]#
+compoundStatement {#statement#{#statement#}#}
+statement declarationStatement
+statement assignmentStatement
+statement ifStatement
+statement whileStatement
+statement ioStatement
+declarationStatement type#simpleID#;
+declarationStatement type#arrayID#;
+assignmentStatement simpleID#=#expression#;
+assignmentStatement arrayIndexing#=#expression#;
+ioStatement read#identifier#;
+ioStatement print#identifier#;
+ifStatement if#condition#compoundStatement
+ifStatement if#condition#compoundStatement#else#compoundStatement
+whileStatement while#condition#compoundStatement
+condition expression#relation#expression
+expression constant
+expression term#operator#term
+term simpleID
+term arrayIndexing
+term integer
+constant integer
+constant string
+constant char
+operator +
+operator -
+operator /
+operator %
+operator *
+relation greaterThan
+relation lowerThan
+relation equals
+type int
+type string
+type char
